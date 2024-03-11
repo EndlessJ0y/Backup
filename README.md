@@ -56,7 +56,7 @@ https://github.com/EndlessJ0y/Git/commit/1018c2deed69b26e91b1e2c3850ead59d620974
 В качестве ответа добавьте ссылку на этот коммит в ваш md-файл с решением.
 
 ### Решение 2
-https://github.com/netology-code/sys-pattern-homework/commit/35c9f19d4a725abc4bc21d71c1d44d05175329af
+https://github.com/EndlessJ0y/Git/commit/751fa2f9496dceafc334edbb6d9b49388eda30ff 
 
 ### Задание 3
 

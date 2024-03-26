@@ -22,58 +22,66 @@
 
 ---
 
-### Задание 1
-Что нужно сделать:
+### Задание 1  
 
-   1. Зарегистрируйте аккаунт на GitHub.
-   2. Создайте новый отдельный публичный репозиторий. Обязательно поставьте галочку в поле «Initialize this repository with a README».
-   3. Склонируйте репозиторий, используя https протокол git clone ....
-   Перейдите в каталог с клоном репозитория.
-    4. Произведите первоначальную настройку Git, указав своё настоящее имя и email: git config --global user.name и git config --global user.email johndoe@example.com.
-   5. Выполните команду git status и запомните результат.
-   6. Отредактируйте файл README.md любым удобным способом, переведя файл в состояние Modified.
-   7. Ещё раз выполните git status и продолжайте проверять вывод этой команды после каждого следующего шага.
-   8. Посмотрите изменения в файле README.md, выполнив команды git diff и git diff --staged.
-   9. Переведите файл в состояние staged или, как говорят, добавьте файл в коммит, командой git add README.md.
-   10. Ещё раз выполните команды git diff и git diff --staged.
-   Теперь можно сделать коммит git commit -m 'First commit'.
-   Сделайте git push origin master.
+## Установите Zabbix Server с веб-интерфейсом.
+## Процесс выполнения
 
-В качестве ответа добавьте ссылку на этот коммит в ваш md-файл с решением.
+    Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
+    Установите PostgreSQL. Для установки достаточна та версия, что есть в системном репозитороии Debian 11.
+    Пользуясь конфигуратором команд с официального сайта, составьте набор команд для установки последней версии Zabbix с поддержкой PostgreSQL и Apache.
+    Выполните все необходимые команды для установки Zabbix Server и Zabbix Web Server.
+
+## Требования к результату
+
+    Прикрепите в файл README.md скриншот авторизации в админке.
+    Приложите в файл README.md текст использованных команд в GitHub.
+
+
+
 ### Решение 1
 
-https://github.com/EndlessJ0y/Git/commit/1018c2deed69b26e91b1e2c3850ead59d6209745
+![auth](https://github.com/EndlessJ0y/Screens/blob/main/auth.jfif)
+![web](https://github.com/EndlessJ0y/Screens/blob/main/photo1711455596.jpeg)
+
+sudo apt install postgresql
+wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
+dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
+apt update
+apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+sudo -u postgres createuser --pwprompt zabbix
+sudo -u postgres createdb -O zabbix zabbix
+
+Файл конфигурации для установки пароля отредактирован вручную
 
 ### Задание 2
 
-Что нужно сделать:
+Установите Zabbix Agent на два хоста.
 
-   1. Создайте файл .gitignore (обратите внимание на точку в начале файла) и проверьте его статус сразу после создания.
-   2. Добавьте файл .gitignore в следующий коммит git add....
-   3. Напишите правила в этом файле, чтобы игнорировать любые файлы .pyc, а также все файлы в директории cache.
-   4. Сделайте коммит и пуш.
+## Процесс выполнения
 
-В качестве ответа добавьте ссылку на этот коммит в ваш md-файл с решением.
+    Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
+    Установите Zabbix Agent на 2 вирт.машины, одной из них может быть ваш Zabbix Server.
+    Добавьте Zabbix Server в список разрешенных серверов ваших Zabbix Agentов.
+    Добавьте Zabbix Agentов в раздел Configuration > Hosts вашего Zabbix Servera.
+    Проверьте, что в разделе Latest Data начали появляться данные с добавленных агентов.
+
+## Требования к результаты
+
+    Приложите в файл README.md скриншот раздела Configuration > Hosts, где видно, что агенты подключены к серверу
+    Приложите в файл README.md скриншот лога zabbix agent, где видно, что он работает с сервером
+    Приложите в файл README.md скриншот раздела Monitoring > Latest data для обоих хостов, где видны поступающие от агентов данные.
+    Приложите в файл README.md текст использованных команд в GitHub
 
 ### Решение 2
-https://github.com/EndlessJ0y/Git/commit/751fa2f9496dceafc334edbb6d9b49388eda30ff 
 
-### Задание 3
+wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-2+ubuntu22.04_all.deb
+dpkg -i zabbix-release_6.0-2+ubuntu22.04_all.deb
+tail -n 30 /var/log/zabbix/zabbix_agentd.log
 
-## Что нужно сделать:
-
-   1. Создайте новую ветку dev и переключитесь на неё.
-   2. Создайте в ветке dev файл test.sh с произвольным содержимым.
-   3. Сделайте несколько коммитов и пушей в ветку dev, имитируя активную работу над файлом в процессе разработки.
-   4. Переключитесь на основную ветку.
-   5. Добавьте файл main.sh в основной ветке с произвольным содержимым, сделайте комит и пуш . Так имитируется продолжение общекомандной разработки в основной ветке во время разработки отдельного функционала в dev ветке.
-   6. Сделайте мердж dev ветки в основную с помощью git merge dev. Напишите осмысленное сообщение в появившееся окно комита.
-   7. Сделайте пуш в основной ветке.
-   8. Не удаляйте ветку dev.
- В качестве ответа прикрепите ссылку на граф коммитов https://github.com/ваш-логин/ваш-репозиторий/network в ваш md-файл с решением.
-
-Ваш граф комитов должен выглядеть аналогично скриншоту
-
-### Решение 3
-
- https://github.com/EndlessJ0y/Git/network
+![hosts](https://github.com/EndlessJ0y/Screens/blob/main/photo1711458540.jpeg)
+![logs1](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459087.jpeg)
+![logs2](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459227.jpeg)
+![lastdata1](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459294.jpeg)
+![lastdata2](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459332.jpeg)

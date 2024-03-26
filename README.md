@@ -44,14 +44,14 @@
 ![auth](https://github.com/EndlessJ0y/Screens/blob/main/auth.jfif)
 ![web](https://github.com/EndlessJ0y/Screens/blob/main/photo1711455596.jpeg)
 
-sudo apt install postgresql
-wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
-dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
-apt update
-apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
-apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
-sudo -u postgres createuser --pwprompt zabbix
-sudo -u postgres createdb -O zabbix zabbix
+	sudo apt install postgresql
+	wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
+	dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
+	apt update
+	apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+	apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+	sudo -u postgres createuser --pwprompt zabbix
+	sudo -u postgres createdb -O zabbix zabbix
 
 Файл конфигурации для установки пароля отредактирован вручную
 
@@ -76,9 +76,9 @@ sudo -u postgres createdb -O zabbix zabbix
 
 ### Решение 2
 
-wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-2+ubuntu22.04_all.deb
-dpkg -i zabbix-release_6.0-2+ubuntu22.04_all.deb
-tail -n 30 /var/log/zabbix/zabbix_agentd.log
+	wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-2+ubuntu22.04_all.deb
+	dpkg -i zabbix-release_6.0-2+ubuntu22.04_all.deb
+	tail -n 30 /var/log/zabbix/zabbix_agentd.log
 
 ![hosts](https://github.com/EndlessJ0y/Screens/blob/main/photo1711458540.jpeg)
 ![logs1](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459087.jpeg)

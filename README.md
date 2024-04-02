@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "Система мониторинга Zabbix" - `Котлярова Дарья`
+# Домашнее задание к занятию "Система мониторинга Zabbix. Часть 2" - `Котлярова Дарья`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -23,65 +23,69 @@
 ---
 
 ### Задание 1  
+## Создайте свой шаблон, в котором будут элементы данных, мониторящие загрузку CPU и RAM хоста.
+    Процесс выполнения
 
-## Установите Zabbix Server с веб-интерфейсом.
-## Процесс выполнения
-
-    Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
-    Установите PostgreSQL. Для установки достаточна та версия, что есть в системном репозитороии Debian 11.
-    Пользуясь конфигуратором команд с официального сайта, составьте набор команд для установки последней версии Zabbix с поддержкой PostgreSQL и Apache.
-    Выполните все необходимые команды для установки Zabbix Server и Zabbix Web Server.
+    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+    В веб-интерфейсе Zabbix Servera в разделе Templates создайте новый шаблон
+    Создайте Item который будет собирать информацию об загрузке CPU в процентах
+    Создайте Item который будет собирать информацию об загрузке RAM в процентах
 
 ## Требования к результату
 
-    Прикрепите в файл README.md скриншот авторизации в админке.
-    Приложите в файл README.md текст использованных команд в GitHub.
+    Прикрепите в файл README.md скриншот страницы шаблона с названием «Задание 1»
 
 
 
 ### Решение 1
 
-![auth](https://github.com/EndlessJ0y/Screens/blob/main/auth.jfif)
-![web](https://github.com/EndlessJ0y/Screens/blob/main/photo1711455596.jpeg)
-
-	sudo apt install postgresql
-	wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
-	dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
-	apt update
-	apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
-	apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
-	sudo -u postgres createuser --pwprompt zabbix
-	sudo -u postgres createdb -O zabbix zabbix
-
-Файл конфигурации для установки пароля отредактирован вручную
+![Задание1](https://github.com/EndlessJ0y/Screens/blob/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B51.jpeg)
 
 ### Задание 2
 
-Установите Zabbix Agent на два хоста.
-
+## Добавьте в Zabbix два хоста и задайте им имена <фамилия и инициалы-1> и <фамилия и инициалы-2>. Например: ivanovii-1 и ivanovii-2.
 ## Процесс выполнения
 
-    Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
-    Установите Zabbix Agent на 2 вирт.машины, одной из них может быть ваш Zabbix Server.
-    Добавьте Zabbix Server в список разрешенных серверов ваших Zabbix Agentов.
-    Добавьте Zabbix Agentов в раздел Configuration > Hosts вашего Zabbix Servera.
-    Проверьте, что в разделе Latest Data начали появляться данные с добавленных агентов.
+    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+    Установите Zabbix Agent на 2 виртмашины, одной из них может быть ваш Zabbix Server
+    Добавьте Zabbix Server в список разрешенных серверов ваших Zabbix Agentов
+    Добавьте Zabbix Agentов в раздел Configuration > Hosts вашего Zabbix Servera
+    Прикрепите за каждым хостом шаблон Linux by Zabbix Agent
+    Проверьте что в разделе Latest Data начали появляться данные с добавленных агентов
 
-## Требования к результаты
+## Требования к результату
 
-    Приложите в файл README.md скриншот раздела Configuration > Hosts, где видно, что агенты подключены к серверу
-    Приложите в файл README.md скриншот лога zabbix agent, где видно, что он работает с сервером
-    Приложите в файл README.md скриншот раздела Monitoring > Latest data для обоих хостов, где видны поступающие от агентов данные.
-    Приложите в файл README.md текст использованных команд в GitHub
+    Результат данного задания сдавайте вместе с заданием 3
 
-### Решение 2
+### Задание 3
+ 
+## Привяжите созданный шаблон к двум хостам. Также привяжите к обоим хостам шаблон Linux by Zabbix Agent.
+## Процесс выполнения
 
-	wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-2+ubuntu22.04_all.deb
-	dpkg -i zabbix-release_6.0-2+ubuntu22.04_all.deb
-	tail -n 30 /var/log/zabbix/zabbix_agentd.log
+    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+    Зайдите в настройки каждого хоста и в разделе Templates прикрепите к этому хосту ваш шаблон
+    Так же к каждому хосту привяжите шаблон Linux by Zabbix Agent
+    Проверьте что в раздел Latest Data начали поступать необходимые данные из вашего шаблона
 
-![hosts](https://github.com/EndlessJ0y/Screens/blob/main/photo1711458540.jpeg)
-![logs1](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459087.jpeg)
-![logs2](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459227.jpeg)
-![lastdata1](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459294.jpeg)
-![lastdata2](https://github.com/EndlessJ0y/Screens/blob/main/photo1711459332.jpeg)
+## Требования к результату
+
+    Прикрепите в файл README.md скриншот страницы хостов, где будут видны привязки шаблонов с названиями «Задание 2-3». Хосты должны иметь зелёный статус подключения
+### Решение 3
+![Задание2-3](https://github.com/EndlessJ0y/Screens/blob/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B52-3.jpeg) 
+
+### Задание 4
+
+## Создайте свой кастомный дашборд.
+## Процесс выполнения
+
+    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+    В разделе Dashboards создайте новый дашборд
+    Разместите на нём несколько графиков на ваше усмотрение.
+
+## Требования к результату
+
+    Прикрепите в файл README.md скриншот дашборда с названием «Задание 4»
+
+### Решение 4
+
+![Задание4](https://github.com/EndlessJ0y/Screens/blob/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_4.jpeg)

@@ -39,6 +39,7 @@
 	
 ![router 1](https://github.com/EndlessJ0y/Screens/blob/main/router1.jpeg)
 ![router 2](https://github.com/EndlessJ0y/Screens/blob/main/router2.jpeg)
+
 ### Задание 2
 
     Запустите две виртуальные машины Linux, установите и настройте сервис Keepalived как в лекции, используя пример конфигурационного файла.

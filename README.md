@@ -23,69 +23,97 @@
 ---
 
 ### Задание 1  
-## Создайте свой шаблон, в котором будут элементы данных, мониторящие загрузку CPU и RAM хоста.
-    Процесс выполнения
 
-    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
-    В веб-интерфейсе Zabbix Servera в разделе Templates создайте новый шаблон
-    Создайте Item который будет собирать информацию об загрузке CPU в процентах
-    Создайте Item который будет собирать информацию об загрузке RAM в процентах
+    Дана схема для Cisco Packet Tracer, рассматриваемая в лекции.
+    На данной схеме уже настроено отслеживание интерфейсов маршрутизаторов Gi0/1 (для нулевой группы)
+    Необходимо аналогично настроить отслеживание состояния интерфейсов Gi0/0 (для первой группы).
+    Для проверки корректности настройки, разорвите один из кабелей между одним из маршрутизаторов и Switch0 и запустите ping между PC0 и Server0.
+    На проверку отправьте получившуюся схему в формате pkt и скриншот, где виден процесс настройки маршрутизатора.
 
-## Требования к результату
-
-    Прикрепите в файл README.md скриншот страницы шаблона с названием «Задание 1»
-
+ 
 
 
 ### Решение 1
 
-![Задание1](https://github.com/EndlessJ0y/Screens/blob/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B51.jpeg)
-
+	Схема https://github.com/EndlessJ0y/Disaster-recovery-Keepalived/blob/main/hsrp_advanced_HW.pkt (находится в репозитории)
+	
+![router 1](https://github.com/EndlessJ0y/Screens/blob/main/router1.jpeg)
+![router 2](https://github.com/EndlessJ0y/Screens/blob/main/router2.jpeg)
 ### Задание 2
 
-## Добавьте в Zabbix два хоста и задайте им имена <фамилия и инициалы-1> и <фамилия и инициалы-2>. Например: ivanovii-1 и ivanovii-2.
-## Процесс выполнения
+    Запустите две виртуальные машины Linux, установите и настройте сервис Keepalived как в лекции, используя пример конфигурационного файла.
+    Настройте любой веб-сервер (например, nginx или simple python server) на двух виртуальных машинах
+    Напишите Bash-скрипт, который будет проверять доступность порта данного веб-сервера и существование файла index.html в root-директории данного веб-сервера.
+    Настройте Keepalived так, чтобы он запускал данный скрипт каждые 3 секунды и переносил виртуальный IP на другой сервер, если bash-скрипт завершался с кодом, отличным от нуля (то есть порт веб-сервера был недоступен или отсутствовал index.html). Используйте для этого секцию vrrp_script
+    На проверку отправьте получившейся bash-скрипт и конфигурационный файл keepalived, а также скриншот с демонстрацией переезда плавающего ip на другой сервер в случае недоступности порта или файла index.html
 
-    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
-    Установите Zabbix Agent на 2 виртмашины, одной из них может быть ваш Zabbix Server
-    Добавьте Zabbix Server в список разрешенных серверов ваших Zabbix Agentов
-    Добавьте Zabbix Agentов в раздел Configuration > Hosts вашего Zabbix Servera
-    Прикрепите за каждым хостом шаблон Linux by Zabbix Agent
-    Проверьте что в разделе Latest Data начали появляться данные с добавленных агентов
 
-## Требования к результату
 
-    Результат данного задания сдавайте вместе с заданием 3
+## Решение 2 
 
-### Задание 3
- 
-## Привяжите созданный шаблон к двум хостам. Также привяжите к обоим хостам шаблон Linux by Zabbix Agent.
-## Процесс выполнения
+![master ip](https://github.com/EndlessJ0y/Screens/blob/main/photo1712496106.jpeg)
+![backup ip, unavailable nginx or absent index.html on master](https://github.com/EndlessJ0y/Screens/blob/main/photo1712496300.jpeg)
 
-    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
-    Зайдите в настройки каждого хоста и в разделе Templates прикрепите к этому хосту ваш шаблон
-    Так же к каждому хосту привяжите шаблон Linux by Zabbix Agent
-    Проверьте что в раздел Latest Data начали поступать необходимые данные из вашего шаблона
+## Config of master
 
-## Требования к результату
 
-    Прикрепите в файл README.md скриншот страницы хостов, где будут видны привязки шаблонов с названиями «Задание 2-3». Хосты должны иметь зелёный статус подключения
-### Решение 3
-![Задание2-3](https://github.com/EndlessJ0y/Screens/blob/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B52-3.jpeg) 
+global_defs {
+    enable_script_security
+}
 
-### Задание 4
+vrrp_script nginx_check {
+    script "/usr/bin/curl -f http://127.0.0.1"
+    interval 3
+    user keepalived
+}
 
-## Создайте свой кастомный дашборд.
-## Процесс выполнения
+vrrp_instance web {
+    state MASTER
+    interface enp1s0
+    virtual_router_id 15
+    priority 255
+    advert_int 2
+    authentication {
+        auth_type PASS
+        auth_pass 12345
+    }
+    virtual_ipaddress {
+        192.168.122.15/24
+    }
+    track_script {
+        nginx_check
+    }
+}
 
-    Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
-    В разделе Dashboards создайте новый дашборд
-    Разместите на нём несколько графиков на ваше усмотрение.
 
-## Требования к результату
+## Config of backup
 
-    Прикрепите в файл README.md скриншот дашборда с названием «Задание 4»
 
-### Решение 4
+global_defs {
+    enable_script_security
+}
 
-![Задание4](https://github.com/EndlessJ0y/Screens/blob/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_4.jpeg)
+vrrp_script nginx_check {
+    script "/usr/bin/curl -f http://127.0.0.1"
+    interval 3
+    user keepalived
+}
+
+vrrp_instance web {
+    state BACKUP
+    interface enp1s0
+    virtual_router_id 15
+    priority 100
+    advert_int 2
+    preempt_delay 30
+    authentication {
+        auth_type PASS
+        auth_pass 12345
+    }
+    virtual_ipaddress {
+        192.168.122.15/24
+    }
+    track_script {
+        nginx_check
+    }
+}

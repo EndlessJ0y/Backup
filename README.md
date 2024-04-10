@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "Система мониторинга Zabbix. Часть 2" - `Котлярова Дарья`
+# Домашнее задание к занятию "Кластеризация и балансировка нагрузки" - `Котлярова Дарья`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -53,7 +53,7 @@
         ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1>
         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
-defaults
+	defaults
         log     global
         mode    http
         option  httplog
@@ -69,7 +69,7 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-listen stats  # веб-страница со статистикой
+	listen stats  # веб-страница со статистикой
         bind                    :888
         mode                    http
         stats                   enable
@@ -77,14 +77,14 @@ listen stats  # веб-страница со статистикой
         stats refresh           5s
         stats realm             Haproxy\ Statistics
 
-frontend example  # секция фронтенд
+	frontend example  # секция фронтенд
         mode http
         bind :8088
         #default_backend web_servers
         #acl ACL_example.com hdr(host) -i example.com
         #use_backend web_servers if ACL_example.com
 
-backend web_servers    # секция бэкенд
+	backend web_servers    # секция бэкенд
         mode http
         balance roundrobin
         option httpchk
@@ -93,7 +93,7 @@ backend web_servers    # секция бэкенд
         server s2 127.0.0.1:9999 check
         
 
-listen web_tcp
+	listen web_tcp
 
         bind :1325
 
@@ -137,7 +137,7 @@ listen web_tcp
         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
 
-defaults
+	defaults
         log     global
         mode    http
         option  httplog
@@ -153,7 +153,7 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-listen stats  # веб-страница со статистикой
+	listen stats  # веб-страница со статистикой
         bind                    :888
         mode                    http
         stats                   enable
@@ -161,13 +161,13 @@ listen stats  # веб-страница со статистикой
         stats refresh           5s
         stats realm             Haproxy\ Statistics
 
-frontend example  # секция фронтенд
+	frontend example  # секция фронтенд
         mode http
         bind :8088
         #default_backend weight_backend
         acl ACL_example.local hdr(host) -i example.local
         use_backend weight_backend if ACL_example.local
-backend weight_backend    # секция бэкенд
+	backend weight_backend    # секция бэкенд
         mode http
         balance roundrobin
         option httpchk
